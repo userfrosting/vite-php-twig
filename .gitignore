@@ -1,0 +1,15 @@
+# Ignores Mac metadata.
+.DS_Store
+
+# Ignore developer resources
+_meta/
+
+# Ignore lock files
+composer.lock
+
+# Ignore Composer vendor
+vendor/
+
+# Ignore dev utils cache
+.phpunit.result.cache
+.php_cs.cache

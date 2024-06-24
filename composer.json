@@ -1,0 +1,39 @@
+{
+    "name": "userfrosting/vite-twig",
+    "type": "library",
+    "description": "Vite function for Twig templates",
+    "keywords": ["vite", "Twig"],
+    "homepage": "https://github.com/userfrosting/vite-twig",
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name": "Louis Charette",
+            "homepage": "https://bbqsoftwares.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "twig/twig": "^3.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpunit/phpunit": "^10.5",
+        "phpstan/phpstan": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-mockery": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.0",
+        "slam/phpstan-extensions": "^6.0",
+        "mockery/mockery": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "UserFrosting\\ViteTwig\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UserFrosting\\ViteTwig\\Tests\\": "tests"
+        }
+    }
+}

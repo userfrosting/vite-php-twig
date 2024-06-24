@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+  schedule:
+    - cron: "0 0 * * 5"
+  workflow_dispatch:
+
+jobs:
+  PHPUnit:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php_versions: ['8.1', '8.2', '8.3']
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    name: PHPUnit Tests - ${{ matrix.php_versions }} - ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup PHP, with composer and extensions
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php_versions }}
+        extensions: mbstring, dom, fileinfo, gd
+        coverage: xdebug
+        tools: pecl
+
+    - name: Install Dependencies
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: Configure matchers for PHPUnit
+      run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+    - name: Execute tests via PHPUnit
+      run: vendor/bin/phpunit
+
+    - name: Upload coverage to Codecov
+      if: github.event_name != 'schedule'
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./_meta/coverage.xml
+        fail_ci_if_error: true

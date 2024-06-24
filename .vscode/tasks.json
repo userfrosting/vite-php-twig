@@ -1,0 +1,35 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "PHPUnit",
+            "type": "shell",
+            "options": {
+                "env": {
+                    "XDEBUG_CONFIG": "idekey=VSCODE"
+                }
+            },
+            "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "PHP CS Fixer",
+            "type": "shell",
+            "options": {},
+            "command": "vendor/bin/php-cs-fixer fix",
+            "problemMatcher": [],
+        },
+        {
+            "label": "PHPStan",
+            "type": "shell",
+            "command": "vendor/bin/phpstan analyse",
+            "problemMatcher": []
+        }
+    ]
+}
