@@ -335,6 +335,7 @@ class ViteManifest implements ViteManifestInterface
     {
         if (!array_key_exists($entryName, $manifest)) {
             $message = sprintf('Entry `%s` not found in manifest', $entryName);
+
             throw new EntrypointNotFoundException($message);
         }
 
@@ -438,7 +439,7 @@ class ViteManifest implements ViteManifestInterface
     }
 
     /**
-     * Same as prefixFile, but accept and array of files
+     * Same as prefixFile, but accept and array of files.
      *
      * @param string[] $files
      *

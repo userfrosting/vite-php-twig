@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Build](https://img.shields.io/github/actions/workflow/status/userfrosting/vite-php-twig/Build.yml?logo=github)](https://github.com/userfrosting/vite-php-twig/actions)
 [![Codecov](https://codecov.io/gh/userfrosting/vite-php-twig/branch/main/graph/badge.svg)](https://app.codecov.io/gh/userfrosting/vite-php-twig/branch/main)
-<!-- [![StyleCI](https://github.styleci.io/repos/444619108/shield?branch=main&style=flat)](https://github.styleci.io/repos/444619108) -->
+[![StyleCI](https://github.styleci.io/repos/821945045/shield?branch=main&style=flat)](https://github.styleci.io/repos/821945045)
 [![PHPStan](https://img.shields.io/github/actions/workflow/status/userfrosting/vite-php-twig/PHPStan.yml?label=PHPStan)](https://github.com/userfrosting/vite-php-twig/actions/workflows/PHPStan.yml)
 [![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue.svg)](https://ko-fi.com/lcharette)
 
