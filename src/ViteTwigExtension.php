@@ -28,10 +28,10 @@ use Twig\TwigFunction;
 final class ViteTwigExtension extends AbstractExtension
 {
     /**
-     * @param ViteManifest $manifest
+     * @param ViteManifestInterface $manifest
      */
     public function __construct(
-        private ViteManifest $manifest
+        private ViteManifestInterface $manifest
     ) {
     }
 
