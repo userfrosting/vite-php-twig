@@ -1,9 +1,9 @@
 {
-    "name": "userfrosting/vite-twig",
+    "name": "userfrosting/vite-php-twig",
     "type": "library",
     "description": "Vite function for Twig templates",
     "keywords": ["vite", "Twig"],
-    "homepage": "https://github.com/userfrosting/vite-twig",
+    "homepage": "https://github.com/userfrosting/vite-php-twig",
     "license" : "MIT",
     "authors" : [
         {

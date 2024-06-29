@@ -12,6 +12,7 @@
                 }
             },
             "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit",
+            // "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit --filter ViteManifestParserTest",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

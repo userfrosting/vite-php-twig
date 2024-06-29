@@ -1,10 +1,10 @@
 <?php
 
-$header = 'UserFrosting Framework (http://www.userfrosting.com)
+$header = 'Vite Twig Functions
 
-@link      https://github.com/userfrosting/framework
-@copyright Copyright (c) 2013-2024 Alexander Weissman, Louis Charette, Jordan Mele
-@license   https://github.com/userfrosting/framework/blob/master/LICENSE.md (MIT License)';
+@link      https://github.com/userfrosting/vite-php-twig
+@copyright Copyright (c) 2024 Louis Charette, UserFrosting
+@license   https://github.com/userfrosting/vite-php-twig/blob/main/LICENSE.md (MIT License)';
 
 $rules = [
     '@PSR2'                                       => true,
