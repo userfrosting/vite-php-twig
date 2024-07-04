@@ -432,7 +432,7 @@ class ViteManifest implements ViteManifestInterface
     protected function prefixFile(string $fileName): string
     {
         $prefix = $this->useServer()
-            ? $this->serverUrl
+            ? $this->serverUrl . $this->basePath
             : $this->basePath;
 
         return sprintf('%s%s', $prefix, $fileName);

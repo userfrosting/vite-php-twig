@@ -183,7 +183,6 @@ class ViteManifestTest extends TestCase
         $this->assertSame(['http://[::1]:3000/@vite/client', 'http://[::1]:3000/views/foo.js', 'http://[::1]:3000/views/bar.js'], $manifest->getScripts('views/foo.js', 'views/bar.js'));
     }
 
-    /** Base path have no effect on server URL */
     public function testDevServerUrlAndBasePath(): void
     {
         $manifest = new ViteManifest(
@@ -193,8 +192,8 @@ class ViteManifestTest extends TestCase
             basePath: 'dist/'
         );
 
-        $this->assertSame(['http://[::1]:3000/@vite/client', 'http://[::1]:3000/views/foo.js'], $manifest->getScripts('views/foo.js'));
-        $this->assertSame(['http://[::1]:3000/@vite/client', 'http://[::1]:3000/views/foo.js', 'http://[::1]:3000/views/bar.js'], $manifest->getScripts('views/foo.js', 'views/bar.js'));
+        $this->assertSame(['http://[::1]:3000/dist/@vite/client', 'http://[::1]:3000/dist/views/foo.js'], $manifest->getScripts('views/foo.js'));
+        $this->assertSame(['http://[::1]:3000/dist/@vite/client', 'http://[::1]:3000/dist/views/foo.js', 'http://[::1]:3000/dist/views/bar.js'], $manifest->getScripts('views/foo.js', 'views/bar.js'));
     }
 
     public function testRenderScripts(): void
