@@ -155,20 +155,22 @@ class ViteManifest implements ViteManifestInterface
 
     /**
      * Fetches and returns all style files for the specified entry points,
-     * unless dev server is enabled, in which case no style are required.
+     * unless dev server is enabled, in which case only standalone entries are returned.
      *
      * @param string ...$entries
      *
-     * @throws JsonException               If manifest can't be read
+     * @return string[] Path to each style files
      * @throws EntrypointNotFoundException If an entry point is not found in the manifest.
      *
-     * @return string[] Path to each style files
+     * @throws JsonException               If manifest can't be read
      */
     public function getStyles(string ...$entries): array
     {
-        // Server. Returns nothing.
+        // Server. Return standalone entries + server;
         if ($this->useServer()) {
-            return [];
+            $stylesheets = array_merge(['@vite/client'], $entries);
+
+            return $this->prefixFiles($stylesheets);
         }
 
         // Default behavior
@@ -263,6 +265,11 @@ class ViteManifest implements ViteManifestInterface
 
         // Return container
         $files = [];
+
+        // Entry point's output is a standalone css file
+        if (str_ends_with($chunk['file'], '.css')) {
+            $files[] = $chunk['file'];
+        }
 
         // Add entry point chunk's css list
         if (array_key_exists('css', $chunk)) {
