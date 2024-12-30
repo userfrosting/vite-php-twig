@@ -159,10 +159,10 @@ class ViteManifest implements ViteManifestInterface
      *
      * @param string ...$entries
      *
-     * @return string[] Path to each style files
+     * @throws JsonException               If manifest can't be read
      * @throws EntrypointNotFoundException If an entry point is not found in the manifest.
      *
-     * @throws JsonException               If manifest can't be read
+     * @return string[] Path to each style files
      */
     public function getStyles(string ...$entries): array
     {
