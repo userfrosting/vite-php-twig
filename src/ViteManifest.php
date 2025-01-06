@@ -166,9 +166,9 @@ class ViteManifest implements ViteManifestInterface
      */
     public function getStyles(string ...$entries): array
     {
-        // Server. Return standalone entries + server;
+        // Server. Return standalone entries;
         if ($this->useServer()) {
-            $stylesheets = array_merge(['@vite/client'], $entries);
+            $stylesheets = array_merge($entries);
 
             return $this->prefixFiles($stylesheets);
         }
