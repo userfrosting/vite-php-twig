@@ -168,7 +168,7 @@ class ViteManifest implements ViteManifestInterface
     {
         // Server. Return standalone entries;
         if ($this->useServer()) {
-            $stylesheets = array_merge($entries);
+            $stylesheets = array_filter($entries, fn($entry) => $this->isStylesheet($entry));
 
             return $this->prefixFiles($stylesheets);
         }
@@ -465,5 +465,10 @@ class ViteManifest implements ViteManifestInterface
     protected function useServer(): bool
     {
         return $this->devEnabled;
+    }
+
+    private function isStylesheet($filename): bool
+    {
+        return in_array(pathinfo($filename, PATHINFO_EXTENSION), ['css', 'less', 'scss']);
     }
 }
