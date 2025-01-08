@@ -469,6 +469,6 @@ class ViteManifest implements ViteManifestInterface
 
     private function isStylesheet($filename): bool
     {
-        return in_array(pathinfo($filename, PATHINFO_EXTENSION), ['css', 'less', 'scss']);
+        return in_array(pathinfo($filename, PATHINFO_EXTENSION), ['css', 'less', 'scss', 'sass']);
     }
 }
