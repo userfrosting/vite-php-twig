@@ -155,7 +155,7 @@ class ViteManifest implements ViteManifestInterface
 
     /**
      * Fetches and returns all style files for the specified entry points,
-     * unless dev server is enabled, in which case no style are required.
+     * unless dev server is enabled, in which case only standalone entries are returned.
      *
      * @param string ...$entries
      *
@@ -166,9 +166,11 @@ class ViteManifest implements ViteManifestInterface
      */
     public function getStyles(string ...$entries): array
     {
-        // Server. Returns nothing.
+        // Server. Return standalone entries;
         if ($this->useServer()) {
-            return [];
+            $stylesheets = array_filter($entries, fn ($entry) => $this->isStylesheet($entry));
+
+            return $this->prefixFiles($stylesheets);
         }
 
         // Default behavior
@@ -263,6 +265,11 @@ class ViteManifest implements ViteManifestInterface
 
         // Return container
         $files = [];
+
+        // Entry point's output is a standalone css file
+        if (str_ends_with($chunk['file'] ?? '', '.css')) {
+            $files[] = $chunk['file'];
+        }
 
         // Add entry point chunk's css list
         if (array_key_exists('css', $chunk)) {
@@ -458,5 +465,19 @@ class ViteManifest implements ViteManifestInterface
     protected function useServer(): bool
     {
         return $this->devEnabled;
+    }
+
+    /**
+     * Check if a file is a stylesheet.
+     *
+     * @param string $filename The filename to check
+     *
+     * @return bool
+     */
+    protected function isStylesheet(string $filename): bool
+    {
+        $extensions = ['css', 'scss', 'sass', 'less'];
+
+        return in_array(pathinfo($filename, PATHINFO_EXTENSION), $extensions, true);
     }
 }

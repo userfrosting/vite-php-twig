@@ -1,33 +1,53 @@
 {
     "_shared-D5fCFa4Q.js": {
-      "file": "assets/shared-ChJ_j-JJ.css",
-      "src": "_shared-D5fCFa4Q.js"
+        "file": "assets/shared-ChJ_j-JJ.css",
+        "src": "_shared-D5fCFa4Q.js"
     },
     "_shared-B7PI925R.js": {
-      "file": "assets/shared-B7PI925R.js",
-      "name": "shared",
-      "css": ["assets/shared-ChJ_j-JJ.css"]
+        "file": "assets/shared-B7PI925R.js",
+        "name": "shared",
+        "css": ["assets/shared-ChJ_j-JJ.css"]
     },
     "baz.js": {
-      "file": "assets/baz-B2H3sXNv.js",
-      "name": "baz",
-      "src": "baz.js",
-      "isDynamicEntry": true
+        "file": "assets/baz-B2H3sXNv.js",
+        "name": "baz",
+        "src": "baz.js",
+        "isDynamicEntry": true
     },
     "views/bar.js": {
-      "file": "assets/bar-gkvgaI9m.js",
-      "name": "bar",
-      "src": "views/bar.js",
-      "isEntry": true,
-      "imports": ["_shared-B7PI925R.js"],
-      "dynamicImports": ["baz.js"]
+        "file": "assets/bar-gkvgaI9m.js",
+        "name": "bar",
+        "src": "views/bar.js",
+        "isEntry": true,
+        "imports": ["_shared-B7PI925R.js"],
+        "dynamicImports": ["baz.js"]
     },
     "views/foo.js": {
-      "file": "assets/foo-BRBmoGS9.js",
-      "name": "foo",
-      "src": "views/foo.js",
-      "isEntry": true,
-      "imports": ["_shared-B7PI925R.js"],
-      "css": ["assets/foo-5UjPuW-k.css"]
+        "file": "assets/foo-BRBmoGS9.js",
+        "name": "foo",
+        "src": "views/foo.js",
+        "isEntry": true,
+        "imports": ["_shared-B7PI925R.js"],
+        "css": ["assets/foo-5UjPuW-k.css"]
+    },
+    "standalone.css": {
+        "file": "standalone-Dei2f1sT.css",
+        "src": "standalone.css",
+        "isEntry": true
+    },
+    "standalone.scss": {
+        "file": "standalone-ABC.css",
+        "src": "standalone.scss",
+        "isEntry": true
+    },
+    "standalone.sass": {
+        "file": "standalone-BCD.css",
+        "src": "standalone.sass",
+        "isEntry": true
+    },
+    "standalone.less": {
+        "file": "standalone-DEF.css",
+        "src": "standalone.less",
+        "isEntry": true
     }
-  }
+}
