@@ -168,7 +168,7 @@ class ViteManifest implements ViteManifestInterface
     {
         // Server. Return standalone entries;
         if ($this->useServer()) {
-            $stylesheets = array_filter($entries, fn($entry) => $this->isStylesheet($entry));
+            $stylesheets = array_filter($entries, fn ($entry) => $this->isStylesheet($entry));
 
             return $this->prefixFiles($stylesheets);
         }
@@ -267,7 +267,7 @@ class ViteManifest implements ViteManifestInterface
         $files = [];
 
         // Entry point's output is a standalone css file
-        if (str_ends_with($chunk['file'], '.css')) {
+        if (str_ends_with($chunk['file'] ?? '', '.css')) {
             $files[] = $chunk['file'];
         }
 
@@ -467,8 +467,17 @@ class ViteManifest implements ViteManifestInterface
         return $this->devEnabled;
     }
 
-    private function isStylesheet($filename): bool
+    /**
+     * Check if a file is a stylesheet.
+     *
+     * @param string $filename The filename to check
+     *
+     * @return bool
+     */
+    protected function isStylesheet(string $filename): bool
     {
-        return in_array(pathinfo($filename, PATHINFO_EXTENSION), ['css', 'less', 'scss', 'sass']);
+        $extensions = ['css', 'scss', 'sass', 'less'];
+
+        return in_array(pathinfo($filename, PATHINFO_EXTENSION), $extensions, true);
     }
 }

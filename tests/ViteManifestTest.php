@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace UserFrosting\ViteTwig\Tests;
 
 use JsonException;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use UserFrosting\ViteTwig\Exceptions\EntrypointNotFoundException;
 use UserFrosting\ViteTwig\Exceptions\ManifestNotFoundException;
@@ -114,6 +115,16 @@ class ViteManifestTest extends TestCase
         ], $manifest->getStyles('views/foo.js', 'views/bar.js'));
     }
 
+    #[TestWith(['standalone.css', 'standalone-Dei2f1sT.css'])]
+    #[TestWith(['standalone.scss', 'standalone-ABC.css'])]
+    #[TestWith(['standalone.sass', 'standalone-BCD.css'])]
+    #[TestWith(['standalone.less', 'standalone-DEF.css'])]
+    public function testGetStylesWithStandaloneCSS(string $entry, string $expected): void
+    {
+        $manifest = new ViteManifest($this->manifestFile);
+        $this->assertSame([$expected], $manifest->getStyles($entry));
+    }
+
     public function testImports() :void
     {
         $manifest = new ViteManifest($this->manifestFile);
@@ -194,6 +205,20 @@ class ViteManifestTest extends TestCase
 
         $this->assertSame(['http://[::1]:3000/dist/@vite/client', 'http://[::1]:3000/dist/views/foo.js'], $manifest->getScripts('views/foo.js'));
         $this->assertSame(['http://[::1]:3000/dist/@vite/client', 'http://[::1]:3000/dist/views/foo.js', 'http://[::1]:3000/dist/views/bar.js'], $manifest->getScripts('views/foo.js', 'views/bar.js'));
+    }
+
+    #[TestWith(['standalone.css', 'http://[::1]:3000/standalone.css'])]
+    #[TestWith(['standalone.scss', 'http://[::1]:3000/standalone.scss'])]
+    #[TestWith(['standalone.less', 'http://[::1]:3000/standalone.less'])]
+    #[TestWith(['standalone.sass', 'http://[::1]:3000/standalone.sass'])]
+    public function testDevServerGetStylesWithStandaloneCSS(string $entry, string $expected): void
+    {
+        $manifest = new ViteManifest(
+            manifestPath: $this->manifestFile,
+            serverUrl: 'http://[::1]:3000/',
+            devEnabled: true,
+        );
+        $this->assertSame([$expected], $manifest->getStyles($entry));
     }
 
     public function testRenderScripts(): void
