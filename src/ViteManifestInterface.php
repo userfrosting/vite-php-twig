@@ -51,6 +51,18 @@ interface ViteManifestInterface
     public function renderPreloads(string ...$entries): string;
 
     /**
+     * Fetches the style files from the manifest for the specified entries and
+     * returns them as HTML style preload hints. If the dev server is used, no
+     * preloading tags are returned for CSS coming from JS chunks, since Vite
+     * injects those at runtime.
+     *
+     * @param string ...$entries
+     *
+     * @return string The CSS preload tags
+     */
+    public function renderStylePreloads(string ...$entries): string;
+
+    /**
      * Fetches and returns all script files for the specified entry points, or
      * the server config if development server is activated.
      *

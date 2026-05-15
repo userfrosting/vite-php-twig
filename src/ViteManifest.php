@@ -124,6 +124,31 @@ class ViteManifest implements ViteManifestInterface
     }
 
     /**
+     * Fetches the style files from the manifest for the specified entries and
+     * returns them as HTML style preload hints. If the dev server is used, no
+     * preloading tags are returned for CSS coming from JS chunks, since Vite
+     * injects those at runtime.
+     *
+     * @param string ...$entries
+     *
+     * @throws JsonException               If manifest can't be read
+     * @throws EntrypointNotFoundException If an entry point is not found in the
+     *                                     manifest.
+     *
+     * @return string The CSS preload tags
+     */
+    public function renderStylePreloads(string ...$entries): string
+    {
+        $styles = $this->getStyles(...$entries);
+
+        $tags = array_map(function (string $file) {
+            return $this->renderStylePreload($file);
+        }, $styles);
+
+        return implode('', $tags);
+    }
+
+    /**
      * Fetches and returns all script files for the specified entry points, or
      * the server config if development server is activated.
      *
@@ -273,7 +298,7 @@ class ViteManifest implements ViteManifestInterface
 
         // Add entry point chunk's css list
         if (array_key_exists('css', $chunk)) {
-            $files = $chunk['css'];
+            $files = array_merge($files, $chunk['css']);
         }
 
         // Recursively follow all chunks in the entry point's imports list
@@ -424,6 +449,21 @@ class ViteManifest implements ViteManifestInterface
     {
         return sprintf(
             '<link rel="modulepreload" href="%s" />',
+            $fileName
+        );
+    }
+
+    /**
+     * Return style preload tag for specified filename.
+     *
+     * @param string $fileName
+     *
+     * @return string
+     */
+    protected function renderStylePreload(string $fileName): string
+    {
+        return sprintf(
+            '<link rel="preload" as="style" href="%s" />',
             $fileName
         );
     }

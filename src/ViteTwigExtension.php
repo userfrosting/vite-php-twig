@@ -22,6 +22,7 @@ use Twig\TwigFunction;
  * - vite_js(string $entryName)
  * - vite_css(string $entryName)
  * - vite_preload(string $entryName)
+ * - vite_css_preload(string $entryName)
  *
  * @see https://vitejs.dev/guide/backend-integration
  */
@@ -44,6 +45,7 @@ final class ViteTwigExtension extends AbstractExtension
             new TwigFunction('vite_js', [$this->manifest, 'renderScripts'], ['is_safe' => ['html']]),
             new TwigFunction('vite_css', [$this->manifest, 'renderStyles'], ['is_safe' => ['html']]),
             new TwigFunction('vite_preload', [$this->manifest, 'renderPreloads'], ['is_safe' => ['html']]),
+            new TwigFunction('vite_css_preload', [$this->manifest, 'renderStylePreloads'], ['is_safe' => ['html']]),
         ];
     }
 }

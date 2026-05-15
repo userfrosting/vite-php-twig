@@ -30,9 +30,10 @@ $manifest->getStyles('views/foo.js'); // Styles
 $manifest->getImports('views/foo.js'); // Preloads
 
 // Render HTML tags for `views/foo.js` entry
-$manifest->renderScripts('views/foo.js'); // Scripts
-$manifest->renderStyles('views/foo.js'); // Styles
-$manifest->renderPreloads('views/foo.js'); // Preloads
+$manifest->renderScripts('views/foo.js');      // Scripts
+$manifest->renderStyles('views/foo.js');       // Styles
+$manifest->renderPreloads('views/foo.js');     // JS module preloads
+$manifest->renderStylePreloads('views/foo.js'); // CSS preload hints
 
 // If you have multiple entry point scripts on the same page, you should pass them in a single call to avoid duplicates - for example:
 $manifest->getScripts('views/foo.js', 'views/bar.js');
@@ -68,7 +69,13 @@ Now, to render all of the `script` and `link` tags for a specific "entry" (e.g. 
 {{ vite_js('views/foo.js') }}
 {{ vite_css('views/foo.js') }}
 {{ vite_preload('views/foo.js') }}
+{{ vite_css_preload('views/foo.js') }}
 ```
+
+- `vite_js` — renders `<script type="module">` tags for the entry's JS files.
+- `vite_css` — renders `<link rel="stylesheet">` tags for the entry's CSS files.
+- `vite_preload` — renders `<link rel="modulepreload">` hints for eagerly fetching imported JS chunks.
+- `vite_css_preload` — renders `<link rel="preload" as="style">` hints so the browser discovers CSS files earlier, even though `vite_css` already adds the `<link rel="stylesheet">` tags.
 
 If you have multiple entry point scripts on the same page, you should pass them in a single call to avoid duplicates - for example:
 ```twig

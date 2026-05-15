@@ -284,4 +284,51 @@ class ViteManifestTest extends TestCase
         $result = $manifest->renderPreloads('views/bar.js');
         $this->assertSame(implode('', $expected), $result);
     }
+
+    // Bug 1 — getStyle() must not drop the standalone .css file when css[] is also present
+    public function testGetStylesWithStandaloneAndCssArray(): void
+    {
+        $manifest = new ViteManifest($this->manifestFile);
+
+        $this->assertSame(
+            ['assets/mixed-standalone.css', 'assets/mixed-extra.css'],
+            $manifest->getStyles('views/mixed.js')
+        );
+    }
+
+    // Bug 2 — renderStylePreloads() must emit <link rel="preload" as="style"> tags
+    public function testStylePreloadTags(): void
+    {
+        $manifest = new ViteManifest($this->manifestFile);
+
+        // views/foo.js has css[] and an import that also has css[]
+        $expected = implode('', [
+            '<link rel="preload" as="style" href="assets/foo-5UjPuW-k.css" />',
+            '<link rel="preload" as="style" href="assets/shared-ChJ_j-JJ.css" />',
+        ]);
+        $this->assertSame($expected, $manifest->renderStylePreloads('views/foo.js'));
+
+        // views/bar.js inherits css only via its import
+        $expected = '<link rel="preload" as="style" href="assets/shared-ChJ_j-JJ.css" />';
+        $this->assertSame($expected, $manifest->renderStylePreloads('views/bar.js'));
+
+        // Entry with both standalone .css file and css[] must include both
+        $expected = implode('', [
+            '<link rel="preload" as="style" href="assets/mixed-standalone.css" />',
+            '<link rel="preload" as="style" href="assets/mixed-extra.css" />',
+        ]);
+        $this->assertSame($expected, $manifest->renderStylePreloads('views/mixed.js'));
+    }
+
+    public function testStylePreloadTagsDevServer(): void
+    {
+        $manifest = new ViteManifest(
+            manifestPath: $this->manifestFile,
+            devEnabled: true,
+        );
+
+        // In dev mode getStyles() returns no CSS for JS entries, so no preload tags
+        $this->assertSame('', $manifest->renderStylePreloads('views/foo.js'));
+        $this->assertSame('', $manifest->renderStylePreloads('views/bar.js'));
+    }
 }

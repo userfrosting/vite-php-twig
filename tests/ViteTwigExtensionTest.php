@@ -113,6 +113,27 @@ class ViteTwigExtensionTest extends TestCase
         $this->assertSame(implode('', $expected), $result);
     }
 
+    public function testCssPreloadTags(): void
+    {
+        // views/foo.js
+        $expected = implode('', [
+            '<link rel="preload" as="style" href="assets/foo-5UjPuW-k.css" />',
+            '<link rel="preload" as="style" href="assets/shared-ChJ_j-JJ.css" />',
+        ]);
+        $this->assertSame($expected, $this->twig->createTemplate("{{ vite_css_preload('views/foo.js') }}")->render());
+
+        // views/bar.js
+        $expected = '<link rel="preload" as="style" href="assets/shared-ChJ_j-JJ.css" />';
+        $this->assertSame($expected, $this->twig->createTemplate("{{ vite_css_preload('views/bar.js') }}")->render());
+
+        // Entry with both standalone .css file and css[] must include both
+        $expected = implode('', [
+            '<link rel="preload" as="style" href="assets/mixed-standalone.css" />',
+            '<link rel="preload" as="style" href="assets/mixed-extra.css" />',
+        ]);
+        $this->assertSame($expected, $this->twig->createTemplate("{{ vite_css_preload('views/mixed.js') }}")->render());
+    }
+
     public function testDevServer(): void
     {
         $manifest = new ViteManifest(
@@ -142,5 +163,6 @@ class ViteTwigExtensionTest extends TestCase
         // No styles or imports
         $this->assertSame('', $twig->createTemplate("{{ vite_css('views/foo.js') }}")->render());
         $this->assertSame('', $twig->createTemplate("{{ vite_preload('views/bar.js') }}")->render());
+        $this->assertSame('', $twig->createTemplate("{{ vite_css_preload('views/foo.js') }}")->render());
     }
 }
